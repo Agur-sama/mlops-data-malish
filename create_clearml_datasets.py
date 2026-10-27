@@ -2,24 +2,17 @@ from __future__ import annotations
 
 import argparse
 import json
-import shutil
 import tempfile
 from pathlib import Path
 
 from clearml import Dataset
+from sklearn.datasets import load_iris, load_wine
 
-from prepare_data import DATA_DIR, prepare_base, prepare_iris_features, prepare_wine
+from prepare_data import save_frame
 
 
 PROJECT = "MIIT/MLOps/practice_3/malish"
 DATASET_NAME = "sklearn-tabular-malish"
-
-
-def finalized_dataset(**kwargs: object) -> Dataset:
-    dataset = Dataset.create(**kwargs)
-    dataset.upload()
-    dataset.finalize()
-    return dataset
 
 
 def main() -> None:
@@ -30,10 +23,21 @@ def main() -> None:
     with tempfile.TemporaryDirectory(prefix="practice3-clearml-") as temp_dir:
         temp = Path(temp_dir)
 
-        prepare_base()
         base_file = temp / "base" / "iris.csv"
-        base_file.parent.mkdir()
-        shutil.copy2(DATA_DIR / "iris.csv", base_file)
+        wine_file = temp / "wine" / "wine.csv"
+        features_file = temp / "iris_features" / "iris.csv"
+        iris = load_iris(as_frame=True).frame
+        iris_features = iris.copy()
+        iris_features["sepal_area"] = (
+            iris_features["sepal length (cm)"] * iris_features["sepal width (cm)"]
+        )
+        iris_features["petal_area"] = (
+            iris_features["petal length (cm)"] * iris_features["petal width (cm)"]
+        )
+        save_frame(iris, base_file)
+        save_frame(load_wine(as_frame=True).frame, wine_file)
+        save_frame(iris_features, features_file)
+
         base = Dataset.create(
             dataset_project=PROJECT,
             dataset_name=DATASET_NAME,
@@ -45,7 +49,6 @@ def main() -> None:
         base.upload()
         base.finalize()
 
-        prepare_wine()
         wine = Dataset.create(
             dataset_project=PROJECT,
             dataset_name=DATASET_NAME,
@@ -54,12 +57,10 @@ def main() -> None:
             dataset_tags=["wine"],
             description="Дочерняя версия: к Iris добавлен sklearn Wine.",
         )
-        wine.add_files(path=DATA_DIR / "wine.csv")
+        wine.add_files(path=wine_file)
         wine.upload()
         wine.finalize()
 
-        prepare_base()
-        prepare_iris_features()
         features = Dataset.create(
             dataset_project=PROJECT,
             dataset_name=DATASET_NAME,
@@ -68,7 +69,7 @@ def main() -> None:
             dataset_tags=["iris-features"],
             description="Отдельная ветвь от базы: Iris с sepal_area и petal_area.",
         )
-        features.add_files(path=DATA_DIR / "iris.csv")
+        features.add_files(path=features_file)
         features.upload()
         features.finalize()
 
