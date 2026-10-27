@@ -62,7 +62,14 @@ cache и remote.
 
 ## ClearML Dataset
 
-Подготовлены воспроизводимые скрипты:
+ClearML server: <https://app.clear.ml>. Использованы уникальные имена:
+
+```text
+project: MIIT/MLOps/practice_3/malish
+dataset name: sklearn-tabular-malish
+```
+
+Для воспроизведения подготовлены скрипты:
 
 - `create_clearml_datasets.py` создаёт `1.0.0`, `1.1.0` и `2.0.0` с требуемым
   lineage и записывает IDs в локальный `clearml_ids.json`;
@@ -70,17 +77,56 @@ cache и remote.
   директории и сохраняет dependency graph, added/modified/removed files, формы,
   столбцы и SHA-256 в `clearml_verification.json`.
 
-Credentials, файлы IDs и скачанные копии исключены из Git. Выполнение на
-учебном ClearML server ожидает настройки SDK командой `clearml-init`.
+Credentials, файлы IDs и скачанные копии исключены из Git. Все три версии
+загружены, финализированы и имеют статус `Completed`.
 
 | Версия | Dataset ID | Родитель | Состав и изменения |
 |---|---|---|---|
-| `1.0.0` | `BASE_ID_PENDING` | нет | исходный `iris.csv`, тег `base` |
-| `1.1.0` | `WINE_ID_PENDING` | `BASE_ID_PENDING` | наследует Iris, добавляет `wine.csv` |
-| `2.0.0` | `IRIS_FEATURES_ID_PENDING` | `BASE_ID_PENDING` | изменяет `iris.csv`, не наследует Wine |
+| `1.0.0` | `f7ced35717664fb18c667dbd5a6ed44a` | нет | исходный `iris.csv`, тег `base` |
+| `1.1.0` | `9a2b28de618840fc89baf3d5daf64b20` | `f7ced35717664fb18c667dbd5a6ed44a` | наследует Iris, добавляет `wine.csv` |
+| `2.0.0` | `359d090b1f664a319665ec22e6858b40` | `f7ced35717664fb18c667dbd5a6ed44a` | изменяет `iris.csv`, не наследует Wine |
 
-Dependency graph и проверочные хэши будут вставлены после подключения к
-учебному ClearML server.
+Страницы Dataset в ClearML UI: [1.0.0](https://app.clear.ml/datasets/simple/7735890b414747d493153662254d5051/experiments/f7ced35717664fb18c667dbd5a6ed44a),
+[1.1.0](https://app.clear.ml/datasets/simple/7735890b414747d493153662254d5051/experiments/9a2b28de618840fc89baf3d5daf64b20),
+[2.0.0](https://app.clear.ml/datasets/simple/7735890b414747d493153662254d5051/experiments/359d090b1f664a319665ec22e6858b40).
+
+### Dependency graph
+
+```json
+{
+  "f7ced35717664fb18c667dbd5a6ed44a": [],
+  "9a2b28de618840fc89baf3d5daf64b20": [
+    "f7ced35717664fb18c667dbd5a6ed44a"
+  ],
+  "359d090b1f664a319665ec22e6858b40": [
+    "f7ced35717664fb18c667dbd5a6ed44a"
+  ]
+}
+```
+
+Таким образом, `WINE_ID` не входит в предков `IRIS_FEATURES_ID`: версии
+`1.1.0` и `2.0.0` образуют две независимые ветви от `BASE_ID`.
+
+### Скачивание и проверка по Dataset ID
+
+Каждая версия была получена через `Dataset.get(dataset_id=...)` и скачана в
+отдельную пустую директорию. Результат:
+
+| Версия | Полный состав | Added | Modified | Removed |
+|---|---|---|---|---|
+| `1.0.0` | `iris.csv` | `iris.csv` | — | — |
+| `1.1.0` | `iris.csv`, `wine.csv` | `wine.csv` | — | — |
+| `2.0.0` | `iris.csv` | — | `iris.csv` | — |
+
+| Версия и файл | SHA-256 | Форма | Столбцы |
+|---|---|---|---|
+| `1.0.0/iris.csv` | `6d700503c9c2e2c71d187b889a87af8a8d3a6dd5bae1266d46f4ee4db5a6349f` | 150 × 5 | исходные четыре признака Iris и `target` |
+| `1.1.0/iris.csv` | `6d700503c9c2e2c71d187b889a87af8a8d3a6dd5bae1266d46f4ee4db5a6349f` | 150 × 5 | исходные четыре признака Iris и `target` |
+| `1.1.0/wine.csv` | `38860ba04ace4d402242340bcf40be4bd6f4ebde9144a3dc89dc12c20f7f8e60` | 178 × 14 | 13 исходных признаков Wine и `target` |
+| `2.0.0/iris.csv` | `3e1ba63f55da2aabc432d00b1670140f5162bf9ef34b837598ec2fc176c9ff26` | 150 × 7 | исходные столбцы Iris, `sepal_area`, `petal_area` |
+
+Скачанные копии совпали по SHA-256 с соответствующими состояниями DVC. Базовая
+версия после создания дочерних Dataset не изменилась.
 
 ## Сравнение DVC и ClearML Dataset
 
