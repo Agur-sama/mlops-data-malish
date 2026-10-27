@@ -1,0 +1,10 @@
+/data/
+/.venv/
+/clearml_ids.json
+/clearml_verification.json
+/clearml_downloads/
+/.idea/
+/.vscode/
+__pycache__/
+*.py[cod]
+.DS_Store
