@@ -42,10 +42,12 @@ def main() -> None:
                     "columns": list(frame.columns),
                 }
             )
+        dependency_graph = dataset.get_dependency_graph()
         result[label] = {
             "dataset_id": dataset.id,
             "version": dataset.version,
-            "dependency_graph": dataset.get_dependency_graph(),
+            "parent_ids": dependency_graph.get(dataset.id, []),
+            "dependency_graph": dependency_graph,
             "all_files": dataset.list_files(),
             "added_files": dataset.list_added_files(),
             "modified_files": dataset.list_modified_files(),
