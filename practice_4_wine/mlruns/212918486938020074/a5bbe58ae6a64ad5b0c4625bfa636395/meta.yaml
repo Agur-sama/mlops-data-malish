@@ -1,0 +1,15 @@
+artifact_uri: file:./mlruns/212918486938020074/a5bbe58ae6a64ad5b0c4625bfa636395/artifacts
+end_time: 1795547090068
+entry_point_name: ''
+experiment_id: '212918486938020074'
+lifecycle_stage: active
+run_id: a5bbe58ae6a64ad5b0c4625bfa636395
+run_name: rf-3-depth-2-leaf-5
+run_uuid: a5bbe58ae6a64ad5b0c4625bfa636395
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1795547087294
+status: 3
+tags: []
+user_id: maksim

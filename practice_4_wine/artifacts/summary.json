@@ -1,0 +1,24 @@
+{
+  "experiment_id": "212918486938020074",
+  "experiment_name": "miit-mlops-practice-4-malish",
+  "tracking_uri": "file:./mlruns",
+  "invocation_id": "afc544d975d4447b8a1fc4606f3e658b",
+  "dataset_id": "9a2b28de618840fc89baf3d5daf64b20",
+  "dataset_sha256": "38860ba04ace4d402242340bcf40be4bd6f4ebde9144a3dc89dc12c20f7f8e60",
+  "best_run_id": "4ba8030412de4058ae9cc0bfc63e0437",
+  "best_run_name": "rf-10-depth-3-leaf-3",
+  "validation_f1": 0.9722633744855966,
+  "test_accuracy": 0.9722222222222222,
+  "test_precision_weighted": 0.9750000000000001,
+  "test_recall_weighted": 0.9722222222222222,
+  "test_f1_weighted": 0.9724742891712039,
+  "run_ids": [
+    "2fa7039d914a473d963c8adb8bb84ac8",
+    "7938a52332f44c74808664111132acae",
+    "420edde16ff049a89141843748d13360",
+    "7534e00e863548d4af3e310347e7fd67",
+    "a5bbe58ae6a64ad5b0c4625bfa636395",
+    "4ba8030412de4058ae9cc0bfc63e0437"
+  ],
+  "model_path": "best_model.joblib"
+}

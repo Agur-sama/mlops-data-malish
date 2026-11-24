@@ -1,0 +1,24 @@
+{
+  "best_run_id": "4ba8030412de4058ae9cc0bfc63e0437",
+  "dataset_id": "9a2b28de618840fc89baf3d5daf64b20",
+  "dataset_sha256": "38860ba04ace4d402242340bcf40be4bd6f4ebde9144a3dc89dc12c20f7f8e60",
+  "signature_present": true,
+  "predictions_match": true,
+  "required_parameters_present": true,
+  "required_validation_metrics_present": true,
+  "input_columns": [
+    "alcohol",
+    "malic_acid",
+    "ash",
+    "alcalinity_of_ash",
+    "magnesium",
+    "total_phenols",
+    "flavanoids",
+    "nonflavanoid_phenols",
+    "proanthocyanins",
+    "color_intensity",
+    "hue",
+    "od280/od315_of_diluted_wines",
+    "proline"
+  ]
+}

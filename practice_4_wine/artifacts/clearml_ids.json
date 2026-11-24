@@ -1,0 +1,7 @@
+{
+  "clearml_task_id": "902c3e4ad01f400986abecc0d772c78f",
+  "clearml_model_id": "151f3ebe430a48f8afc99ab3e7ea0257",
+  "clearml_task_url": "https://app.clear.ml/projects/9e2b5232e1df4f90aec6c7754396d8dc/experiments/902c3e4ad01f400986abecc0d772c78f/output/log",
+  "clearml_model_url": "https://files.clear.ml/MIIT/MLOps/practice_4/malish/wine-best-model.902c3e4ad01f400986abecc0d772c78f/models/best_model.joblib",
+  "model_storage_uri": "https://files.clear.ml/MIIT/MLOps/practice_4/malish/wine-best-model.902c3e4ad01f400986abecc0d772c78f/models/best_model.joblib"
+}

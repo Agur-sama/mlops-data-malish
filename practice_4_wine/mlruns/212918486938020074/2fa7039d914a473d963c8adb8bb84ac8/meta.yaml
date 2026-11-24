@@ -1,0 +1,15 @@
+artifact_uri: file:./mlruns/212918486938020074/2fa7039d914a473d963c8adb8bb84ac8/artifacts
+end_time: 1795547078377
+entry_point_name: ''
+experiment_id: '212918486938020074'
+lifecycle_stage: active
+run_id: 2fa7039d914a473d963c8adb8bb84ac8
+run_name: logreg-c-0.0001
+run_uuid: 2fa7039d914a473d963c8adb8bb84ac8
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1795547074892
+status: 3
+tags: []
+user_id: maksim
